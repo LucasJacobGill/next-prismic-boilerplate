@@ -69,178 +69,53 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type BlogPostDocumentDataSlicesSlice = never;
-
-/**
- * Content for Blog Post documents
- */
-interface BlogPostDocumentData {
-  /**
-   * Slice Zone field in *Blog Post*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blog_post.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<BlogPostDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Blog Post*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: blog_post.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta Description field in *Blog Post*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: blog_post.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Meta Image field in *Blog Post*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: blog_post.meta_image
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-}
-
-/**
- * Blog Post document from Prismic
- *
- * - **API ID**: `blog_post`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type BlogPostDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<BlogPostDocumentData>,
-    "blog_post",
-    Lang
-  >;
-
-type ContactDocumentDataSlicesSlice = TextBlockSlice | CallToActionSlice;
-
-/**
- * Content for Contact documents
- */
-interface ContactDocumentData {
-  /**
-   * Slice Zone field in *Contact*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<ContactDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Contact*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: contact.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta Description field in *Contact*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: contact.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Meta Image field in *Contact*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact.meta_image
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-}
-
-/**
- * Contact document from Prismic
- *
- * - **API ID**: `contact`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type ContactDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<ContactDocumentData>,
-    "contact",
-    Lang
-  >;
-
-interface FooterDocumentData {}
-
-/**
- * Footer document from Prismic
- *
- * - **API ID**: `footer`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type FooterDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<FooterDocumentData>,
-    "footer",
-    Lang
-  >;
-
-interface HeaderDocumentData {}
-
-/**
- * Header document from Prismic
- *
- * - **API ID**: `header`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type HeaderDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<HeaderDocumentData>,
-    "header",
-    Lang
-  >;
-
-type HomepageDocumentDataSlicesSlice = CallToActionSlice | TextBlockSlice;
+type HomepageDocumentDataSlicesSlice = RichTextSlice;
 
 /**
  * Content for Homepage documents
  */
 interface HomepageDocumentData {
+  /**
+   * Title field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Add title here.
+   * - **API ID Path**: homepage.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Homepage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Add description here.
+   * - **API ID Path**: homepage.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Buttons field in *Homepage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Add buttons here.
+   * - **API ID Path**: homepage.buttons
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buttons: prismic.Repeatable<
+    prismic.LinkField<
+      string,
+      string,
+      unknown,
+      prismic.FieldState,
+      "Primary" | "Secondary"
+    >
+  >;
+
   /**
    * Slice Zone field in *Homepage*
    *
@@ -300,141 +175,51 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >;
 
-export type AllDocumentTypes =
-  | BlogPostDocument
-  | ContactDocument
-  | FooterDocument
-  | HeaderDocument
-  | HomepageDocument;
+export type AllDocumentTypes = HomepageDocument;
 
 /**
- * Primary content in *CallToAction → Default → Primary*
+ * Primary content in *RichText → Default → Primary*
  */
-export interface CallToActionSliceDefaultPrimary {
+export interface RichTextSliceDefaultPrimary {
   /**
-   * Title field in *CallToAction → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: call_to_action.default.primary.title
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Rich Text field in *CallToAction → Default → Primary*
+   * Content field in *RichText → Default → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: call_to_action.default.primary.rich_text
+   * - **Placeholder**: Add richtext content here.
+   * - **API ID Path**: rich_text.default.primary.content
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  rich_text: prismic.RichTextField;
-
-  /**
-   * Link field in *CallToAction → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: call_to_action.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  content: prismic.RichTextField;
 }
 
 /**
- * Default variation for CallToAction Slice
+ * Default variation for RichText Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type CallToActionSliceDefault = prismic.SharedSliceVariation<
+export type RichTextSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Simplify<CallToActionSliceDefaultPrimary>,
+  Simplify<RichTextSliceDefaultPrimary>,
   never
 >;
 
 /**
- * Slice variation for *CallToAction*
+ * Slice variation for *RichText*
  */
-type CallToActionSliceVariation = CallToActionSliceDefault;
+type RichTextSliceVariation = RichTextSliceDefault;
 
 /**
- * CallToAction Shared Slice
+ * RichText Shared Slice
  *
- * - **API ID**: `call_to_action`
- * - **Description**: CallToAction
+ * - **API ID**: `rich_text`
+ * - **Description**: RichText
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type CallToActionSlice = prismic.SharedSlice<
-  "call_to_action",
-  CallToActionSliceVariation
->;
-
-/**
- * Primary content in *TextBlock → Default → Primary*
- */
-export interface TextBlockSliceDefaultPrimary {
-  /**
-   * Tagline field in *TextBlock → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: text_block.default.primary.tagline
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  tagline: prismic.KeyTextField;
-
-  /**
-   * Title field in *TextBlock → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: text_block.default.primary.title
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  title: prismic.KeyTextField;
-
-  /**
-   * Rich Text field in *TextBlock → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: text_block.default.primary.rich_text
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  rich_text: prismic.RichTextField;
-}
-
-/**
- * Default variation for TextBlock Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type TextBlockSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<TextBlockSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Slice variation for *TextBlock*
- */
-type TextBlockSliceVariation = TextBlockSliceDefault;
-
-/**
- * TextBlock Shared Slice
- *
- * - **API ID**: `text_block`
- * - **Description**: TextBlock
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type TextBlockSlice = prismic.SharedSlice<
-  "text_block",
-  TextBlockSliceVariation
+export type RichTextSlice = prismic.SharedSlice<
+  "rich_text",
+  RichTextSliceVariation
 >;
 
 declare module "@prismicio/client" {
@@ -458,28 +243,14 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
-      BlogPostDocument,
-      BlogPostDocumentData,
-      BlogPostDocumentDataSlicesSlice,
-      ContactDocument,
-      ContactDocumentData,
-      ContactDocumentDataSlicesSlice,
-      FooterDocument,
-      FooterDocumentData,
-      HeaderDocument,
-      HeaderDocumentData,
       HomepageDocument,
       HomepageDocumentData,
       HomepageDocumentDataSlicesSlice,
       AllDocumentTypes,
-      CallToActionSlice,
-      CallToActionSliceDefaultPrimary,
-      CallToActionSliceVariation,
-      CallToActionSliceDefault,
-      TextBlockSlice,
-      TextBlockSliceDefaultPrimary,
-      TextBlockSliceVariation,
-      TextBlockSliceDefault,
+      RichTextSlice,
+      RichTextSliceDefaultPrimary,
+      RichTextSliceVariation,
+      RichTextSliceDefault,
     };
   }
 }
