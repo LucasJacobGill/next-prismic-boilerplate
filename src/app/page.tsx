@@ -18,7 +18,7 @@ export default async function Page() {
 
   return (
     <>
-      <section className="relative min-h-svh flex items-center justify-center">
+      <section className="relative flex items-center justify-center py-10">
         <div className="max-w-4xl w-full mx-auto px-5 space-y-5">
           <AppWindowMac size="32" className="stroke-foreground" />
           <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-white font-sans max-w-x leading-relaxed">
