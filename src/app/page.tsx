@@ -47,7 +47,7 @@ export default async function Page() {
           )}
         </div>
       </section>
-      {/* <SliceZone slices={page.data.slices} components={components} />; */}
+      <SliceZone slices={page.data.slices} components={components} />;
     </>
   );
 }
