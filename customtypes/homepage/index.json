@@ -6,15 +6,40 @@
   "status": true,
   "json": {
     "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": "Add title here."
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "Add description here.",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "buttons": {
+        "type": "Link",
+        "config": {
+          "label": "Buttons",
+          "placeholder": "Add buttons here.",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": true,
+          "variants": ["Primary", "Secondary"]
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "call_to_action": {
-              "type": "SharedSlice"
-            },
-            "text_block": {
+            "rich_text": {
               "type": "SharedSlice"
             }
           }
