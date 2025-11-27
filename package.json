@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm:next:dev\" \"npm:slicemachine\" --names \"next,slicemachine\" --prefix-colors blue,magenta",
-    "next/dev": "next dev",
+    "next:dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -25,6 +25,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.5",
     "slice-machine-ui": "^2.20.0",
