@@ -134,7 +134,7 @@ export type BlogPostDocument<Lang extends string = string> =
     Lang
   >;
 
-type ContactDocumentDataSlicesSlice = never;
+type ContactDocumentDataSlicesSlice = TextBlockSlice | CallToActionSlice;
 
 /**
  * Content for Contact documents
@@ -235,7 +235,7 @@ export type HeaderDocument<Lang extends string = string> =
     Lang
   >;
 
-type HomepageDocumentDataSlicesSlice = never;
+type HomepageDocumentDataSlicesSlice = CallToActionSlice | TextBlockSlice;
 
 /**
  * Content for Homepage documents
