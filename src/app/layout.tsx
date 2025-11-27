@@ -80,7 +80,7 @@ async function Footer() {
   const settings = await client.getSingle("settings");
 
   return (
-    <footer className="relative py-5">
+    <footer className="relative pt-5 pb-8">
       <div className="max-w-4xl w-full mx-auto px-5">
         <hr className="opacity-10 text-foreground" />
         <div className="flex items-center justify-between pt-5">
