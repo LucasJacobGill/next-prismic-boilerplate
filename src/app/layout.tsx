@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PrismicPreview } from "@prismicio/next";
 import { repositoryName } from "@/prismicio";
+import Link from "next/link";
+import { createClient } from "@/prismicio";
+import { PrismicNextLink } from "@prismicio/next";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +31,84 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geist.variable} ${geistMono.variable} antialiased`}>
-        <main>{children}</main>
+      <body
+        className={`${geist.variable} ${geistMono.variable} antialiased min-h-svh flex flex-col`}
+      >
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
       <PrismicPreview repositoryName={repositoryName} />
     </html>
+  );
+}
+
+async function Header() {
+  const client = createClient();
+  const settings = await client.getSingle("settings");
+
+  return (
+    <header>
+      <div className="max-w-4xl w-full mx-auto px-5 py-5 flex items-center justify-between">
+        <Link
+          href="/"
+          className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear text-xs"
+        >
+          Index
+        </Link>
+
+        {settings.data.navigation.length > 0 && (
+          <nav className="flex gap-4 items-center justify-end">
+            {settings.data.navigation.map((item, index) => (
+              <PrismicNextLink
+                key={index}
+                field={item.link}
+                className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear text-xs"
+              >
+                {item.link.text}
+              </PrismicNextLink>
+            ))}
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+}
+
+async function Footer() {
+  const client = createClient();
+  const settings = await client.getSingle("settings");
+
+  return (
+    <footer className="relative py-5">
+      <div className="max-w-4xl w-full mx-auto px-5">
+        <hr className="opacity-10 text-foreground" />
+        <div className="flex items-center justify-between pt-5">
+          <p className="text-foreground text-xs">
+            Built by{" "}
+            <Link
+              href="https://github.com/LucasJacobGill"
+              className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear"
+            >
+              Lucas Gill
+            </Link>
+          </p>
+
+          {settings.data.navigation.length > 0 && (
+            <nav className="flex gap-4 items-center justify-end">
+              {settings.data.navigation.map((item, index) => (
+                <PrismicNextLink
+                  key={index}
+                  field={item.link}
+                  className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear text-xs"
+                >
+                  {item.link.text}
+                </PrismicNextLink>
+              ))}
+            </nav>
+          )}
+        </div>
+      </div>
+    </footer>
   );
 }
