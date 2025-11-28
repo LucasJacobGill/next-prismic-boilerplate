@@ -189,7 +189,7 @@ export type BlogPostDocument<Lang extends string = string> =
     Lang
   >;
 
-type HomepageDocumentDataSlicesSlice = RichTextSlice;
+type HomepageDocumentDataSlicesSlice = BlogPostsSlice | RichTextSlice;
 
 /**
  * Content for Homepage documents
@@ -348,6 +348,75 @@ export type AllDocumentTypes =
   | SettingsDocument;
 
 /**
+ * Item in *BlogPosts → Default → Primary → Selected Posts*
+ */
+export interface BlogPostsSliceDefaultPrimarySelectedPostsItem {
+  /**
+   * Post field in *BlogPosts → Default → Primary → Selected Posts*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog_posts.default.primary.selected_posts[].post
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  post: ContentRelationshipFieldWithData<
+    [
+      {
+        id: "blog_post";
+        fields: ["title", "introduction", "date", "featured_image"];
+      },
+    ]
+  >;
+}
+
+/**
+ * Primary content in *BlogPosts → Default → Primary*
+ */
+export interface BlogPostsSliceDefaultPrimary {
+  /**
+   * Selected Posts field in *BlogPosts → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: blog_posts.default.primary.selected_posts[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  selected_posts: prismic.GroupField<
+    Simplify<BlogPostsSliceDefaultPrimarySelectedPostsItem>
+  >;
+}
+
+/**
+ * Default variation for BlogPosts Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPostsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BlogPostsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BlogPosts*
+ */
+type BlogPostsSliceVariation = BlogPostsSliceDefault;
+
+/**
+ * BlogPosts Shared Slice
+ *
+ * - **API ID**: `blog_posts`
+ * - **Description**: BlogPosts
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPostsSlice = prismic.SharedSlice<
+  "blog_posts",
+  BlogPostsSliceVariation
+>;
+
+/**
  * Primary content in *RichText → Default → Primary*
  */
 export interface RichTextSliceDefaultPrimary {
@@ -423,6 +492,11 @@ declare module "@prismicio/client" {
       SettingsDocumentData,
       SettingsDocumentDataNavigationItem,
       AllDocumentTypes,
+      BlogPostsSlice,
+      BlogPostsSliceDefaultPrimarySelectedPostsItem,
+      BlogPostsSliceDefaultPrimary,
+      BlogPostsSliceVariation,
+      BlogPostsSliceDefault,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
       RichTextSliceVariation,

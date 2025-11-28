@@ -17,10 +17,9 @@ export const repositoryName =
  *
  * {@link https://prismic.io/docs/route-resolver#route-resolver}
  */
-// TODO: Update the routes array to match your project's route structure.
 const routes: Route[] = [
-  // Examples:
   { type: "homepage", path: "/" },
+  { type: "blog_post", path: "/blog/:uid" },
 ];
 
 /**

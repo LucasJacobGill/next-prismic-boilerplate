@@ -106,7 +106,7 @@ export async function generateMetadata({
   const page = await client.getByUID("blog_post", uid).catch(() => notFound());
 
   return {
-    title: page.data.meta_title,
+    title: page.data.meta_title || page.data.title + " | Blog",
     description: page.data.meta_description,
     openGraph: {
       images: [{ url: asImageSrc(page.data.meta_image) ?? "" }],
