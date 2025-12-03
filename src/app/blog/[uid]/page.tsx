@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             <PrismicRichText field={page.data.introduction} />
           </div>
           {page.data.featured_image.url && (
-            <div className="aspect-square lg:aspect-video overflow-hidden rounded-lg">
+            <div className="aspect-square md:aspect-video overflow-hidden rounded-lg">
               <PrismicNextImage
                 field={page.data.featured_image}
                 className="object-cover object-center w-full h-full"
