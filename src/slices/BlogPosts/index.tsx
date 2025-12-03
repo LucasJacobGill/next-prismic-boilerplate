@@ -20,14 +20,14 @@ const BlogPosts: FC<BlogPostsProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
     >
       <div className="max-w-4xl w-full mx-auto px-5 space-y-5">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-y-8 gap-x-4">
           {slice.primary.selected_posts.map(
             (item, index) =>
               isFilled.link(item.post) && (
                 <PrismicNextLink
                   key={index}
                   field={item.post}
-                  className="grid grid-rows-subgrid gap-3 row-span-4"
+                  className="grid grid-rows-subgrid gap-3 row-span-4 hover:opacity-80 transition-opacity duration-150 ease-linear"
                 >
                   <PrismicNextImage
                     field={item.post.data?.featured_image}
