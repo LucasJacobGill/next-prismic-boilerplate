@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ViewTransition } from "react";
 import { Content } from "@prismicio/client";
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 import { isFilled } from "@prismicio/client";
@@ -13,7 +13,6 @@ export type BlogPostsProps = SliceComponentProps<Content.BlogPostsSlice>;
  * Component for "BlogPosts" Slices.
  */
 const BlogPosts: FC<BlogPostsProps> = ({ slice }) => {
-  console.log("BlogPosts slice data:", slice.primary.selected_posts);
   return (
     <section
       data-slice-type={slice.slice_type}
@@ -29,10 +28,12 @@ const BlogPosts: FC<BlogPostsProps> = ({ slice }) => {
                   field={item.post}
                   className="grid grid-rows-subgrid gap-3 row-span-4 hover:opacity-80 transition-opacity duration-150 ease-linear"
                 >
-                  <PrismicNextImage
-                    field={item.post.data?.featured_image}
-                    className="aspect-square rounded-lg object-cover object-center"
-                  />
+                  <ViewTransition name={`featured-image-${item.post.uid}`}>
+                    <PrismicNextImage
+                      field={item.post.data?.featured_image}
+                      className="aspect-square rounded-lg object-cover object-center"
+                    />
+                  </ViewTransition>
                   <h4 className="text-lg font-semibold text-foreground font-sans">
                     {item.post.data?.title || "Untitled Post"}
                   </h4>
