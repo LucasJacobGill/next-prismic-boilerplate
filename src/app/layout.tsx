@@ -7,6 +7,9 @@ import { repositoryName } from "@/prismicio";
 import Link from "next/link";
 import { createClient } from "@/prismicio";
 import { PrismicNextLink } from "@prismicio/next";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -61,7 +64,7 @@ async function Header() {
         </Link>
 
         {settings.data.navigation.length > 0 && (
-          <nav className="flex gap-4 items-center justify-end">
+          <nav className="hidden md:flex gap-4 items-center justify-end">
             {settings.data.navigation.map((item, index) => (
               <PrismicNextLink
                 key={index}
@@ -73,8 +76,55 @@ async function Header() {
             ))}
           </nav>
         )}
+
+        <div className="md:hidden">
+          <MobileNav />
+        </div>
       </div>
     </header>
+  );
+}
+
+async function MobileNav() {
+  const client = createClient();
+  const settings = await client.getSingle("settings");
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger
+        className={cn(
+          "xl:hidden",
+          "data-[state='open']:[&>svg:nth-child(1)]:hidden data-[state='closed']:[&>svg:nth-child(2)]:hidden"
+        )}
+      >
+        <Menu className="stroke-foreground" size={16} />
+        <X className="stroke-foreground" size={16} />
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Content
+          aria-describedby={undefined}
+          className="fixed inset-0 top-16 z-50 h-svh w-full overflow-y-scroll bg-background xl:invisible xl:hidden data-[state='open']:animate-slide-from-right data-[state='closed']:animate-slide-to-right"
+        >
+          <span className="sr-only">
+            <Dialog.Title>Mobile Navigation</Dialog.Title>
+          </span>
+          <nav>
+            <ul className="flex flex-col gap-4 p-5 bg-background/95 backdrop-blur-md rounded-md shadow-lg border border-foreground/10">
+              {settings.data.navigation.map((item, index) => (
+                <li key={index}>
+                  <PrismicNextLink
+                    field={item.link}
+                    className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear text-xs"
+                  >
+                    {item.link.text}
+                  </PrismicNextLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
