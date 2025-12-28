@@ -7,6 +7,8 @@ import { PrismicNextImage } from "@prismicio/next";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
+import { ViewTransition } from "react";
+
 type Params = { uid: string };
 
 export default async function Page({ params }: { params: Promise<Params> }) {
@@ -28,12 +30,12 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             <PrismicRichText field={page.data.introduction} />
           </div>
           {page.data.featured_image.url && (
-            <div className="aspect-square md:aspect-video overflow-hidden rounded-lg">
+            <ViewTransition name={`featured-image-${page.uid}`}>
               <PrismicNextImage
                 field={page.data.featured_image}
-                className="object-cover object-center w-full h-full"
+                className="aspect-square md:aspect-video object-cover object-center rounded-lg"
               />
-            </div>
+            </ViewTransition>
           )}
         </div>
       </section>
