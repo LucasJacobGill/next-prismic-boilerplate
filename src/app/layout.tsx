@@ -31,18 +31,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geist.variable} ${geistMono.variable} antialiased min-h-svh flex flex-col`}
-      >
-        <ViewTransition>
+    <ViewTransition>
+      <html lang="en">
+        <body
+          className={`${geist.variable} ${geistMono.variable} antialiased min-h-svh flex flex-col`}
+        >
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-        </ViewTransition>
-      </body>
-      <PrismicPreview repositoryName={repositoryName} />
-    </html>
+        </body>
+        <PrismicPreview repositoryName={repositoryName} />
+      </html>
+    </ViewTransition>
   );
 }
 
@@ -99,6 +99,12 @@ async function Footer() {
 
           {settings.data.navigation.length > 0 && (
             <nav className="flex gap-4 items-center justify-end">
+              <Link
+                href="/"
+                className="text-foreground underline underline-offset-4 decoration-transparent hover:decoration-current hover:opacity-75 transition-colors duration-200 ease-linear text-xs"
+              >
+                Index
+              </Link>
               {settings.data.navigation.map((item, index) => (
                 <PrismicNextLink
                   key={index}
